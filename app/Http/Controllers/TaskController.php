@@ -7,15 +7,31 @@ use App\Models\Task;
 use App\Http\Resources\TaskResource;
 use App\Http\Requests\StoreTaskRequest;   
 use App\Http\Requests\UpdateTaskRequest;  
+use App\Http\Requests\ListTasksRequest;
 
 class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(ListTasksRequest $request)
     {
-        return TaskResource::collection(Task::all());
+        $validated = $request->validated();
+
+        $tasksQuery = Task::query();
+
+        if (isset($validated['status'])) {
+            $tasksQuery->where('status', $validated['status']);
+        }
+
+        $sortBy = $validated['sort_by'] ?? 'created_at';
+        $sortDir = $validated['sort_dir'] ?? 'desc';
+        $tasksQuery->orderBy($sortBy, $sortDir);
+
+        $perPage = $validated['per_page'] ?? 10;
+        $tasks = $tasksQuery->paginate($perPage);
+
+        return TaskResource::collection($tasks);
     }
 
     /**
