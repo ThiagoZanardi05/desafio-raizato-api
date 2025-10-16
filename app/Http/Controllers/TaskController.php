@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Http\Resources\TaskResource;
 
 class TaskController extends Controller
 {
@@ -12,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return Task::all();
+        return TaskResource::collection(Task::all());
     }
 
     /**
@@ -25,21 +26,19 @@ class TaskController extends Controller
         'description' => 'nullable|string',
     ]);
 
-    $task = Task::create([
-        'title' => $validatedData['title'],
-        'description' => $validatedData['description'] ?? null,
-        
-    ]);
+    $task = Task::create($validatedData);
 
-    return response()->json($task, 201);
-}
+        return (new TaskResource($task))
+                ->response()
+                ->setStatusCode(201);
+    }
 
     /**
      * Display the specified resource.
      */
     public function show(Task $task)
     {
-        return $task;
+        return new TaskResource($task);
     }
 
     /**
@@ -55,7 +54,7 @@ class TaskController extends Controller
 
         $task->update($validatedData);
 
-        return $task;
+        return new TaskResource($task);
     }
 
     /**

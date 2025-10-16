@@ -26,7 +26,7 @@ class TaskControllerTest extends TestCase
         $response->assertStatus(200);
 
         // Verifica se a resposta contém exatamente 3 tarefas
-        $response->assertJsonCount(3);
+       $response->assertJsonCount(3, 'data');
     }
 
     /**
@@ -142,7 +142,7 @@ class TaskControllerTest extends TestCase
         $task = Task::factory()->create();
 
         $updatedData = [
-            'status' => 'qualquer_coisa', // um status inválido
+            'status' => 'qualquer_coisa', 
         ];
 
         $response = $this->putJson("/api/tasks/{$task->id}", $updatedData);
@@ -150,7 +150,6 @@ class TaskControllerTest extends TestCase
         // Verifica se a resposta é um erro de validação
         $response->assertStatus(422);
 
-        // Verifica se a resposta JSON contém um erro para o campo "status"
         $response->assertJsonValidationErrors('status');
     }
 }
