@@ -1,13 +1,3 @@
-Compreendido\! O seu pedido faz todo o sentido. O estilo do exemplo que você mandou é mais direto e focado, perfeito para um desafio de programação.
-
-Pedi desculpa pela versão anterior não ter acertado no tom.
-
-Preparei um novo `README.md` para o seu back-end, seguindo de perto a estrutura e o estilo do seu exemplo, mas atualizando-o com todas as funcionalidades avançadas que você implementou.
-
-Pode substituir o conteúdo do seu `README.md` por este.
-
------
-
 # API de Lista de Tarefas (To-Do List) - Desafio Back-end
 
 Esta é a API RESTful desenvolvida como back-end para o desafio de programação. A API foi construída com **Laravel 11**, seguindo as melhores práticas para gerir os recursos de uma aplicação de lista de tarefas de forma robusta, escalável e profissional.
